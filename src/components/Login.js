@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidateData } from "../utils/validate";
 
 const Login = () => {
   const [loginForm, setloginForm] = useState(1);
 
+  const email = useRef(null);
+  const password = useRef(null);
+  const fullName = useRef(null);
+
+  const [error, setError] = useState(null);
+
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+    const validateData = checkValidateData(
+      fullName?.current == null ? null : fullName.current.value,
+      email.current.value,
+      password.current.value
+    );
+    setError(validateData);
+  };
   const toggleForm = () => {
     setloginForm(!loginForm);
   };
@@ -24,22 +40,31 @@ const Login = () => {
 
         {!loginForm && (
           <input
+            ref={fullName}
             type="text"
             placeholder="Full Name"
             className="w-full bg-gray-300 p-1 mb-4 rounded border-2 border-gray-500"
           />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email or phone number"
           className="w-full bg-gray-300 p-1 mb-4 rounded border-2 border-gray-500"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="w-full bg-gray-300 p-1 mb-4 rounded border-2 border-gray-500"
         />
-        <button className="w-full px-2 py-1 text-sm rounded-sm bg-red-600 text-white">
+        {error && (
+          <p className="text-red-600 font-bold text-sm mb-1">* {error}</p>
+        )}
+        <button
+          className="w-full px-2 py-1 text-sm rounded-sm bg-red-600 text-white"
+          onClick={handleButtonClick}
+        >
           Submit
         </button>
         <p className="mt-1 font-bold ">
