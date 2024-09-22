@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 
 const Login = () => {
+  const [loginForm, setloginForm] = useState(1);
+
+  const toggleForm = () => {
+    setloginForm(!loginForm);
+  };
+
   return (
     <div>
       <Header />
@@ -12,7 +18,17 @@ const Login = () => {
         />
       </div>
       <form className="w-1/3 mx-auto absolute left-0 my-36 right-0 p-8 bg-gradient-to-tr from-red-50 to-transparent">
-        <h1 className="font-bold text-3xl mb-3">Sign In</h1>
+        <h1 className="font-bold text-3xl mb-3">
+          {loginForm ? "Sign In" : "Sign Up"}
+        </h1>
+
+        {!loginForm && (
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="w-full bg-gray-300 p-1 mb-4 rounded border-2 border-gray-500"
+          />
+        )}
         <input
           type="text"
           placeholder="Email or phone number"
@@ -27,9 +43,9 @@ const Login = () => {
           Submit
         </button>
         <p className="mt-1 font-bold ">
-          New to Netflix?{" "}
-          <a className="text-red-600" href="#">
-            Sign Up Now
+          {loginForm ? "New to Netflix?" : "Already have an account?"}
+          <a className="text-red-600" href="#" onClick={toggleForm}>
+            {loginForm ? " Sign Up" : " Sign In"}
           </a>
         </p>
       </form>
