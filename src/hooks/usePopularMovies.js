@@ -11,7 +11,6 @@ export const usePopularMovies = () => {
       API_OPTION
     );
     const data = await response.json();
-
     dispatch(setPopularMovies(data?.results));
   };
 

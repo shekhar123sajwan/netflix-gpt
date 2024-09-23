@@ -5,10 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { setLang } from "../utils/configSlice";
+
 const Header = () => {
   const navigate = useNavigate();
   const userDispatch = useDispatch();
   const userStore = useSelector((store) => store.user);
+  const gptStore = useSelector((store) => store.gpt.showGptSearch);
+  const configLang = useSelector((store) => store.config.lang);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -24,6 +30,14 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptSearchClick = () => {
+    //Toggle Gpt Button
+    userDispatch(toggleGptSearchView());
+  };
+
+  const handleLangChange = (e) => {
+    userDispatch(setLang(e.currentTarget.value));
+  };
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -39,7 +53,45 @@ const Header = () => {
       <div className="flex justify-end">
         {userStore?.uid && (
           <>
+            {gptStore ? (
+              <>
+                <select
+                  name="lang"
+                  className="bg-gray-200 text-sm font-bold p-2 mx-2"
+                  onChange={handleLangChange}
+                  defaultValue={
+                    configLang == "hindi"
+                      ? "hindi"
+                      : configLang == "en"
+                      ? "en"
+                      : ""
+                  }
+                >
+                  <option value="hindi">Hindi</option>
+                  <option value="en">English</option>
+                </select>
+                <button
+                  onClick={() => {
+                    userDispatch(toggleGptSearchView());
+                  }}
+                  className="bg-purple-500 text-white rounded-sm p-2 mx-2"
+                >
+                  Home
+                </button>
+              </>
+            ) : (
+              <div>
+                <button
+                  onClick={handleGptSearchClick}
+                  className="bg-purple-500 text-white rounded-sm p-2 mx-2"
+                >
+                  Gpt Search
+                </button>
+              </div>
+            )}
+
             <p className="text-white mr-3 py-2">({userStore?.displayName})</p>
+
             <img
               src={`${userStore?.photoURL}`}
               alt=""
