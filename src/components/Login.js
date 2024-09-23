@@ -10,6 +10,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { PHOTO_URL } from "../utils/constants";
 
 const Login = () => {
   const [loginForm, setloginForm] = useState(1);
@@ -45,7 +46,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(auth.currentUser, {
             displayName: fullName.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/34606343?v=4",
+            photoURL: PHOTO_URL,
           })
             .then(() => {
               // Profile updated
@@ -58,7 +59,6 @@ const Login = () => {
                   photoURL: user.photoURL,
                 })
               );
-              // navigate("/browse");
             })
             .catch((error) => {
               const errorCode = error.code;
