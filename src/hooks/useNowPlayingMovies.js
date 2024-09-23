@@ -12,7 +12,7 @@ export const useNowPlayingMovies = () => {
     const movieList = await fetch(url, API_OPTION);
 
     const { results } = await movieList.json();
-    console.log(results);
+
     dispatch(setMovie(results));
   };
 
