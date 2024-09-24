@@ -1,8 +1,6 @@
 import React from "react";
 import MovieList from "./MovieList";
 import { useSelector } from "react-redux";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movie?.movie);

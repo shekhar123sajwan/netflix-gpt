@@ -1,6 +1,8 @@
 import React from "react";
 import MovieCard from "./MovieCard";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const MovieList = ({ title, movies }) => {
   const settings = {
@@ -49,6 +51,7 @@ const MovieList = ({ title, movies }) => {
             <Slider {...settings}>
               {movies?.length > 0 &&
                 movies?.map((movie) => {
+                  if (!movie?.poster_path) return null;
                   return <MovieCard key={movie.id} movie={movie} />;
                 })}
             </Slider>
