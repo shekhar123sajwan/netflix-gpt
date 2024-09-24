@@ -48,8 +48,8 @@ const Header = () => {
       });
   };
   return (
-    <div className=" flex items-center justify-between w-full absolute z-10 px-8 bg-gradient-to-b from-black to-transparent">
-      <img className="w-32" src={LOGO} />
+    <div className=" flex items-center justify-between w-full absolute z-10 px-8 bg-gradient-to-b from-black to-transparent flex-col sm:flex-row md:flex-row">
+      <img className="w-32 mx-auto sm:md:mx-0 md:mx-0" src={LOGO} />
       <div className="flex justify-end">
         {userStore?.uid && (
           <>
